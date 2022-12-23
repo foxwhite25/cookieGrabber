@@ -15,9 +15,6 @@ func randomMd5() string {
 	return fmt.Sprintf("%x", md5.Sum(nil))
 }
 
-// Write a webserver that records a parameter called "cookie" into a file with random hash names.
-// The webserver should listen on port 8080
-// The webserver does not need to respond to any other requests
 func main() {
 	channel := make(chan string)
 	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -47,5 +44,5 @@ func main() {
 			}
 		}
 	}()
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	log.Fatal(http.ListenAndServeTLS(":8080", "localhost.crt", "localhost.key", handler))
 }
